@@ -2,6 +2,7 @@ import * as React from "react"
 import { graphql } from 'gatsby'
 import divider from '../images/divider.svg'
 import './index.scss'
+import { Helmet } from "react-helmet"
 
 export const query = graphql`
   query Words {
@@ -39,6 +40,9 @@ const IndexPage = ({data}) => {
 
   return (
     <main>
+      <Helmet>
+        <meta name="theme-color" content="#5c1f5d" />
+      </Helmet>
       <title>A List of Extraordinary Words</title>
       <section>
         <header>
