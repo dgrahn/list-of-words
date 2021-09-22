@@ -50,18 +50,20 @@ jobs:
       
       #    mv temp/public/* ./
       #    rm -rf temp
-      # - name: Commit updates
-      #   if: ${{ success() }}
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git add .
-      #     git commit -m "Add changes"
+      - name: Commit updates
+        if: ${{ success() }}
+        run: |
+          cd build
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Add changes"
         
-      # - name: Push changes
-      #   if: ${{ success() }}
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     BRANCH: main
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     force: true
+      - name: Push changes to build
+        if: ${{ success() }}
+        uses: ad-m/github-push-action@master
+        with:
+          BRANCH: build
+          directory: build
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true
