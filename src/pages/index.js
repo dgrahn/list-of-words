@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import { Helmet } from 'react-helmet'
 import divider from '../images/divider.svg'
 import './index.scss'
+import { siteMetadata } from "../../gatsby-config"
 
 export const query = graphql`
   query Words {
@@ -11,8 +12,12 @@ export const query = graphql`
         word
       }
     }
+    site {
+      buildTime
+    }
   }
 `
+
 
 function categorizeWords(words) {
   const wordsMap = {}
@@ -33,6 +38,8 @@ const IndexPage = ({data}) => {
 
   const words = data.allWordsYaml.nodes.map(w => w.word)
   const wordsMap = categorizeWords(words)
+
+  console.log(data)
 
   return (
     <main>
@@ -70,7 +77,7 @@ const IndexPage = ({data}) => {
         ))}
 
         <footer>
-          &copy; Dan Grahn
+          &copy; Dan Grahn | {data.site.buildTime}
         </footer>
       </section>
     </main>
