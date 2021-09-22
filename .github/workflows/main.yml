@@ -44,12 +44,7 @@ jobs:
         if: ${{ success() }}
         run: |
           mv ./main/public/* ./build
-          ls ./main
-          echo "-----"
-          ls ./build
       
-      #    mv temp/public/* ./
-      #    rm -rf temp
       - name: Commit updates
         if: ${{ success() }}
         run: |
