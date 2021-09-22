@@ -41,10 +41,10 @@ jobs:
       - name: move files
         if: ${{ success() }}
         run: |
-          mv temp/public/* ./
-          rm -rf temp
           ls ./
       
+      #    mv temp/public/* ./
+      #    rm -rf temp
       # - name: Commit updates
       #   if: ${{ success() }}
       #   run: |
