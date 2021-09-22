@@ -12,6 +12,12 @@ module.exports = {
         name: 'words',
         path: `${__dirname}/content/`
       }
+    },
+    {
+      resolve: 'gatsby-plugin-google-analytics',
+      options: {
+        trackingId: 'UA-133277904-1'
+      }
     }
   ],
   pathPrefix: '/list-of-words',
