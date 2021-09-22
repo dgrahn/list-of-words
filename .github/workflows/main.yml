@@ -9,19 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout main branch
-        uses: actions/checkout
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
 
       - name: checkout dev branch
-        uses: actions/checkout
+        uses: actions/checkout@v2
         with:
           ref: dev
           path: temp
           persist-credentials: false
 
       - name: Cache node modules
-        uses: actions/cache
+        uses: actions/cache@v2
         env:
           cache-name: cache-node-modules
         with:
