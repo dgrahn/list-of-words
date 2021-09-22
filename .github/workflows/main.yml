@@ -43,7 +43,7 @@ jobs:
       - name: move files
         if: ${{ success() }}
         run: |
-          mv ./main/public/* ./build
+          rsync -a ./main/public/* ./build
       
       - name: Commit updates
         if: ${{ success() }}
