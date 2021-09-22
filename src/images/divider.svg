@@ -1,0 +1,23 @@
+<svg version="1.1"
+     viewBox="0 0 620 44"
+     xmlns="http://www.w3.org/2000/svg">
+    <style>
+        path {
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-miterlimit: 10;
+        }
+    </style>
+    <g transform="translate(310,33)">
+        <path d="M 0,0 C 21.528,-21.528 94.038,-41.287 158.661,-6.462"></path>
+        <path d="M 0,0 C -21.529,-21.528 -94.038,-41.287 -158.661,-6.462"></path>
+    </g>
+    <g transform="translate(310,1)">
+        <path d="M 0,0 C 83.626,39.133 193.675,44.986 310.166,6.517"></path>
+        <path d="M 0,0 C 61.008,37.337 162.826,57.442 274.982,25.131"></path>
+        <path d="M 0,0 C -83.626,39.133 -193.676,44.986 -310.166,6.517"></path>
+        <path d="M 0,0 C -61.009,37.337 -162.826,57.442 -274.982,25.131"></path>
+    </g>
+</svg>

@@ -1,0 +1,61 @@
+name: A List of Extraordinary Words
+
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout main branch
+        uses: actions/checkout
+        with:
+          persist-credentials: false
+
+      - name: checkout dev branch
+        uses: actions/checkout
+        with:
+          ref: dev
+          path: temp
+          persist-credentials: false
+
+      - name: Cache node modules
+        uses: actions/cache
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: npm install and build
+        run: |
+          cd temp
+          npm install
+          npm build
+      
+      - name: move files
+        if: ${{ success() }}
+        run: |
+          mv temp/public/* ./
+          rm -rf temp
+      
+      - name: Commit updates
+        if: ${{ success() }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Add changes"
+        
+      - name: Push changes
+        if: ${{ success() }}
+        users: ad-m/github-push-action@main
+        with:
+          BRANCH: main
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          force: true

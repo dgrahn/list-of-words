@@ -1,0 +1,27 @@
+{
+  "name": "a-list-of-extraordinary-words",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A List of Extraordinary Words",
+  "author": "Dan Grahn",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^3.13.1",
+    "gatsby-plugin-sass": "^4.14.0",
+    "gatsby-source-filesystem": "^3.14.0",
+    "gatsby-transformer-yaml": "^3.14.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "sass": "^1.42.0"
+  }
+}
