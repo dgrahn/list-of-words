@@ -70,6 +70,16 @@ const IndexPage = ({data}) => {
           &copy; Dan Grahn | {data.site.buildTime}
         </footer>
       </section>
+      
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133277904-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-133277904-1');
+      </script>
     </main>
   )
 }
