@@ -1,6 +1,5 @@
 import * as React from "react"
 import { graphql } from 'gatsby'
-import { Helmet } from 'react-helmet'
 import divider from '../images/divider.svg'
 import './index.scss'
 import { siteMetadata } from "../../gatsby-config"
@@ -39,18 +38,9 @@ const IndexPage = ({data}) => {
   const words = data.allWordsYaml.nodes.map(w => w.word)
   const wordsMap = categorizeWords(words)
 
-  console.log(data)
-
   return (
     <main>
-      <Helmet>
-        {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/site.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/grid.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/header.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/container.min.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/components/divider.min.css"/> */}
-      </Helmet>
-
+      <title>A List of Extraordinary Words</title>
       <section>
         <header>
           <h1>
@@ -64,7 +54,7 @@ const IndexPage = ({data}) => {
         </header>
 
         {Object.entries(wordsMap).map(([letter, words]) => (
-          <>
+          <React.Fragment key={letter}>
             <div className="divider">{letter.toUpperCase()}</div>
             <ul className="grid">
               {words.map(word => (
@@ -73,7 +63,7 @@ const IndexPage = ({data}) => {
                 </li>
               ))}
             </ul>
-          </>
+          </React.Fragment>
         ))}
 
         <footer>
