@@ -2,7 +2,6 @@ import * as React from "react"
 import { graphql } from 'gatsby'
 import divider from '../images/divider.svg'
 import './index.scss'
-import { Helmet } from "react-helmet"
 
 export const query = graphql`
   query Words {
@@ -16,7 +15,6 @@ export const query = graphql`
     }
   }
 `
-
 
 function categorizeWords(words) {
   const wordsMap = {}
@@ -40,10 +38,6 @@ const IndexPage = ({data}) => {
 
   return (
     <main>
-      <Helmet>
-        <meta name="theme-color" content="#5c1f5d" />
-      </Helmet>
-      <title>A List of Extraordinary Words</title>
       <section>
         <header>
           <h1>
@@ -74,6 +68,15 @@ const IndexPage = ({data}) => {
         </footer>
       </section>
     </main>
+  )
+}
+
+export function Head() {
+  return (
+    <>
+      <title>A List of Extraordinary Words</title>
+      <meta name="theme-color" content="#5c1f5d" />
+    </>
   )
 }
 
