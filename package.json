@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "gatsby": "^5.10.0",
-    "gatsby-plugin-google-analytics": "^5.10.0",
+    "gatsby-plugin-google-gtag": "^5.16.0",
     "gatsby-plugin-sass": "^6.10.0",
     "gatsby-source-filesystem": "^5.10.0",
     "gatsby-transformer-yaml": "^5.10.0",
