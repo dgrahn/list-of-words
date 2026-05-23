@@ -1,33 +1,33 @@
-import test from 'node:test';
-import assert from 'node:assert';
 import { categorizeWords } from './wordUtils.js';
 
-test('categorizeWords basic categorization', (t) => {
-  const words = ['apple', 'banana', 'apricot', 'blueberry', 'cherry'];
-  const expected = {
-    a: ['apple', 'apricot'],
-    b: ['banana', 'blueberry'],
-    c: ['cherry']
-  };
-  const result = categorizeWords(words);
-  assert.deepStrictEqual(result, expected);
-});
+describe('categorizeWords', () => {
+  it('basic categorization', () => {
+    const words = ['apple', 'banana', 'apricot', 'blueberry', 'cherry'];
+    const expected = {
+      a: ['apple', 'apricot'],
+      b: ['banana', 'blueberry'],
+      c: ['cherry']
+    };
+    const result = categorizeWords(words);
+    expect(result).toEqual(expected);
+  });
 
-test('categorizeWords empty array', (t) => {
-  const words = [];
-  const expected = {};
-  const result = categorizeWords(words);
-  assert.deepStrictEqual(result, expected);
-});
+  it('empty array', () => {
+    const words = [];
+    const expected = {};
+    const result = categorizeWords(words);
+    expect(result).toEqual(expected);
+  });
 
-test('categorizeWords null/undefined input', (t) => {
-  assert.deepStrictEqual(categorizeWords(null), {});
-  assert.deepStrictEqual(categorizeWords(undefined), {});
-});
+  it('null/undefined input', () => {
+    expect(categorizeWords(null)).toEqual({});
+    expect(categorizeWords(undefined)).toEqual({});
+  });
 
-test('categorizeWords single word', (t) => {
-  const words = ['apple'];
-  const expected = { a: ['apple'] };
-  const result = categorizeWords(words);
-  assert.deepStrictEqual(result, expected);
+  it('single word', () => {
+    const words = ['apple'];
+    const expected = { a: ['apple'] };
+    const result = categorizeWords(words);
+    expect(result).toEqual(expected);
+  });
 });
