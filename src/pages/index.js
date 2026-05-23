@@ -46,7 +46,6 @@ const IndexPage = ({ data }) => {
                   className={`letter-block ${isEven ? 'align-left' : 'align-right'}`}
                 >
                   <span className="bg-letter">{letter.toUpperCase()}</span>
-                  <h2>{letter.toUpperCase()}</h2>
                   <ul className={isEven ? 'align-left' : 'align-right'}>
                     {words.map((word) => (
                       <li key={word}>

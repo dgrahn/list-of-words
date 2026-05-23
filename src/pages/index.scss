@@ -24,7 +24,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0; // Better for mobile to use full width if small
 
   @media (min-width: 640px) {
     padding: 2rem;
@@ -35,7 +35,7 @@ body {
   width: 100%;
   max-width: 56rem; // 4xl
   background-color: $bg-page;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); // shadow-2xl
+  box-shadow: none;
   display: flex;
   flex-direction: column;
   padding: 1.5rem;
@@ -43,6 +43,7 @@ body {
   overflow: hidden;
 
   @media (min-width: 640px) {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); // shadow-2xl
     padding: 3rem;
   }
 
@@ -56,7 +57,7 @@ header {
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 0; // Touches the main square
   z-index: 10;
 
   h1 {
@@ -104,7 +105,7 @@ main {
   flex-grow: 1;
   box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); // shadow-inner
   position: relative;
-  margin-top: 1rem;
+  margin-top: 0; // Touches the header
   overflow: hidden;
 
   @media (min-width: 640px) {
@@ -158,25 +159,16 @@ main {
   .bg-letter {
     position: absolute;
     top: -1rem;
-    font-size: 12rem;
+    font-size: 8rem;
     font-weight: 900;
     line-height: 1;
     color: $letter-bg;
     pointer-events: none;
     user-select: none;
     z-index: -1; // Behind content
-  }
-
-  h2 {
-    color: $text-light;
-    font-weight: 900;
-    font-size: 2.25rem; // 4xl
-    line-height: 1;
-    margin: 0 0 0.75rem;
-    position: relative; // Ensure it's above bg-letter if needed, but z-index -1 on bg-letter handles it
 
     @media (min-width: 640px) {
-      font-size: 3rem; // 5xl
+      font-size: 12rem;
     }
   }
 

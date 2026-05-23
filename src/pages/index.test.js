@@ -30,10 +30,10 @@ describe("IndexPage", () => {
   it("categorizes and displays words by letter", () => {
     render(<IndexPage data={mockData} />)
 
-    // Check for category dividers (h2)
-    expect(screen.getByRole("heading", { name: "A", level: 2 })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "B", level: 2 })).toBeInTheDocument()
-    expect(screen.getByRole("heading", { name: "C", level: 2 })).toBeInTheDocument()
+    // Check for category dividers (bg-letter)
+    expect(screen.getByText("A")).toBeInTheDocument()
+    expect(screen.getByText("B")).toBeInTheDocument()
+    expect(screen.getByText("C")).toBeInTheDocument()
 
     // Check for words
     expect(screen.getByText("apple")).toBeInTheDocument()
