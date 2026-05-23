@@ -33,8 +33,10 @@ function categorizeWords(words) {
 
 const IndexPage = ({data}) => {
 
-  const words = data.allWordsYaml.nodes.map(w => w.word)
-  const wordsMap = categorizeWords(words)
+  const wordsMap = React.useMemo(() => {
+    const words = data.allWordsYaml.nodes.map(w => w.word)
+    return categorizeWords(words)
+  }, [data.allWordsYaml.nodes])
 
   return (
     <main>
