@@ -56,7 +56,7 @@ const IndexPage = ({data}) => {
             <ul className="grid">
               {words.map(word => (
                 <li key={word}>
-                  <a href={`http://en.wiktionary.org/wiki/${word}`}>{word}</a>
+                  <a href={`https://en.wiktionary.org/wiki/${word}`}>{word}</a>
                 </li>
               ))}
             </ul>
