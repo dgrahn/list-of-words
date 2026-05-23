@@ -22,5 +22,5 @@ module.exports = {
       }
     }
   ],
-  pathPrefix: '/list-of-words',
+  pathPrefix: process.env.PATH_PREFIX || '/list-of-words',
 };
