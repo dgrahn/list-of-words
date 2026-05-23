@@ -1,6 +1,7 @@
 import * as React from "react"
 import { graphql } from 'gatsby'
 import divider from '../images/divider.svg'
+import { categorizeWords } from '../utils/wordUtils'
 import './index.scss'
 
 export const query = graphql`
@@ -15,21 +16,6 @@ export const query = graphql`
     }
   }
 `
-
-function categorizeWords(words) {
-  const wordsMap = {}
-  words.forEach(word => {
-    const letter = word[0]
-
-    if (wordsMap[letter]) {
-      wordsMap[letter].push(word)
-    } else {
-      wordsMap[letter] = [ word ]
-    }
-  })
-
-  return wordsMap;
-}
 
 const IndexPage = ({data}) => {
 
@@ -56,7 +42,7 @@ const IndexPage = ({data}) => {
             <ul className="grid">
               {words.map(word => (
                 <li key={word}>
-                  <a href={`http://en.wiktionary.org/wiki/${word}`}>{word}</a>
+                  <a href={`https://en.wiktionary.org/wiki/${word}`}>{word}</a>
                 </li>
               ))}
             </ul>
