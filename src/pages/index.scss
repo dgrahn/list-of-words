@@ -61,7 +61,7 @@ header {
   z-index: 10;
 
   h1 {
-    font-size: 1.5rem; // 2xl
+    font-size: 2.25rem; // 4xl
     font-weight: 900; // font-black
     text-transform: uppercase;
     color: $text-dark;
@@ -70,7 +70,7 @@ header {
     margin: 0;
 
     @media (min-width: 640px) {
-      font-size: 1.875rem; // 3xl
+      font-size: 2.5rem;
     }
 
     @media (min-width: 768px) {
@@ -80,7 +80,7 @@ header {
 
   .byline {
     color: $text-accent;
-    font-size: 0.875rem; // sm
+    font-size: 1.125rem; // lg
     font-weight: 700; // bold
     letter-spacing: 0.1em; // tracking-widest
     text-transform: uppercase;
@@ -89,7 +89,7 @@ header {
     padding-bottom: 0.25rem;
 
     @media (min-width: 640px) {
-      font-size: 1rem; // base
+      font-size: 1.125rem;
     }
 
     @media (min-width: 768px) {
@@ -192,11 +192,11 @@ main {
 
     li {
       color: $text-light;
-      font-size: 0.75rem; // xs
+      font-size: 1.125rem; // lg
       font-weight: 900;
       letter-spacing: 0.1em; // tracking-widest
       text-transform: uppercase;
-      line-height: 1;
+      line-height: 1.2;
       transition: color 0.2s;
       cursor: default;
 
@@ -205,7 +205,7 @@ main {
       }
 
       @media (min-width: 640px) {
-        font-size: 0.875rem; // sm
+        font-size: 0.875rem; // sm - maybe slightly smaller on desktop columns is okay, but let's see
       }
     }
   }
@@ -219,7 +219,7 @@ footer {
   width: 100%;
   color: $text-dark;
   font-weight: 700;
-  font-size: 8px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding-top: 1rem;
