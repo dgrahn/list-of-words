@@ -1,4 +1,5 @@
 $bg-page: #E8E6E1;
+$bg-container: #F9F8F6;
 $bg-main: #8B9E88;
 $text-dark: #1A1A1A;
 $text-light: #E8E6E1;
@@ -38,21 +39,21 @@ body {
 .content-container {
   width: 100%;
   max-width: 42rem;
-  background-color: $bg-page;
+  background-color: $bg-container;
   box-shadow: none;
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  padding: 1.125rem;
   position: relative;
   overflow: hidden;
 
   @media (min-width: 640px) {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); // shadow-2xl
-    padding: 3rem;
+    padding: 1.25rem;
   }
 
   @media (min-width: 768px) {
-    padding: 4rem;
+    padding: 1.5rem;
   }
 }
 
