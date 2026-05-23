@@ -1,6 +1,5 @@
 import * as React from "react"
 import { graphql } from 'gatsby'
-import divider from '../images/divider.svg'
 import { categorizeWords } from '../utils/wordUtils'
 import './index.scss'
 
@@ -17,53 +16,56 @@ export const query = graphql`
   }
 `
 
-const IndexPage = ({data}) => {
-
-  const wordsMap = data.allWordsYaml.nodes.reduce((acc, node) => {
-    const word = node.word
-    const letter = word[0]
-
-    if (acc[letter]) {
-      acc[letter].push(word)
-    } else {
-      acc[letter] = [word]
-    }
-
-    return acc
-  }, {})
+const IndexPage = ({ data }) => {
+  const wordsMap = React.useMemo(() => categorizeWords(data.allWordsYaml.nodes.map(n => n.word)), [data.allWordsYaml.nodes]);
+  const alphabet = Object.keys(wordsMap).sort();
 
   return (
-    <main>
-      <section>
+    <div className="app-wrapper">
+      <div className="content-container">
         <header>
           <h1>
-            A List of
-            <span className="extra">Extraordinary</span>
-            <span className="words">Words</span>
-            <span className="header">by Dan Grahn &amp; Co.</span>
+            A List Of<br />
+            Extraordinary<br />
+            Words
           </h1>
-
-          <img src={divider} alt=""/>
+          <div className="byline">
+            BY DAN GRAHN<br />
+            & COMPANY
+          </div>
         </header>
 
-        {Object.entries(wordsMap).map(([letter, words]) => (
-          <React.Fragment key={letter}>
-            <div className="divider">{letter.toUpperCase()}</div>
-            <ul className="grid">
-              {words.map(word => (
-                <li key={word}>
-                  <a href={`https://en.wiktionary.org/wiki/${word}`}>{word}</a>
-                </li>
-              ))}
-            </ul>
-          </React.Fragment>
-        ))}
+        <main>
+          <div className="word-columns">
+            {alphabet.map((letter, index) => {
+              const isEven = index % 2 === 0;
+              const words = wordsMap[letter];
+              return (
+                <div
+                  key={letter}
+                  className={`letter-block ${isEven ? 'align-left' : 'align-right'}`}
+                >
+                  <span className="bg-letter">{letter.toUpperCase()}</span>
+                  <h2>{letter.toUpperCase()}</h2>
+                  <ul className={isEven ? 'align-left' : 'align-right'}>
+                    {words.map((word) => (
+                      <li key={word}>
+                        {word}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
+          </div>
+        </main>
 
         <footer>
-          &copy; Dan Grahn | {data.site.buildTime}
+          <div>© DAN GRAHN</div>
+          <div>{data.site.buildTime}</div>
         </footer>
-      </section>
-    </main>
+      </div>
+    </div>
   )
 }
 
@@ -71,7 +73,7 @@ export function Head() {
   return (
     <>
       <title>A List of Extraordinary Words</title>
-      <meta name="theme-color" content="#5c1f5d" />
+      <meta name="theme-color" content="#8B9E88" />
     </>
   )
 }
