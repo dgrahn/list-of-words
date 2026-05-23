@@ -1,6 +1,7 @@
 import * as React from "react"
 import { graphql } from 'gatsby'
 import divider from '../images/divider.svg'
+import { categorizeWords } from '../utils/wordUtils'
 import './index.scss'
 
 export const query = graphql`
@@ -16,26 +17,21 @@ export const query = graphql`
   }
 `
 
-function categorizeWords(words) {
-  const wordsMap = {}
-  words.forEach(word => {
-    const letter = word[0]
-
-    if (wordsMap[letter]) {
-      wordsMap[letter].push(word)
-    } else {
-      wordsMap[letter] = [ word ]
-    }
-  })
-
-  return wordsMap;
-}
-
 const IndexPage = ({data}) => {
 
   const wordsMap = React.useMemo(() => {
-    const words = data.allWordsYaml.nodes.map(w => w.word)
-    return categorizeWords(words)
+    return data.allWordsYaml.nodes.reduce((acc, node) => {
+      const word = node.word
+      const letter = word[0]
+
+      if (acc[letter]) {
+        acc[letter].push(word)
+      } else {
+        acc[letter] = [word]
+      }
+
+      return acc
+    }, {})
   }, [data.allWordsYaml.nodes])
 
   return (
