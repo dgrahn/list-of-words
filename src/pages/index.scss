@@ -55,6 +55,10 @@ body {
   @media (min-width: 768px) {
     padding: 1.5rem;
   }
+
+  @media (min-width: 1024px) {
+    max-width: 80rem;
+  }
 }
 
 header {
@@ -118,43 +122,35 @@ main {
 
 .word-columns {
   width: 100%;
-  column-count: 1;
+  display: grid;
+  grid-template-columns: 1fr;
   column-gap: 2rem;
+  row-gap: 2rem;
   position: relative;
   z-index: 10;
 
   @media (min-width: 640px) {
     column-gap: 3rem;
   }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1440px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .letter-block {
-  break-inside: avoid;
-  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   position: relative; // Needed for absolute bg-letter
-
-  &.align-left {
-    align-items: flex-start;
-    text-align: left;
-
-    .bg-letter {
-      left: 0;
-    }
-  }
-
-  &.align-right {
-    align-items: flex-end;
-    text-align: right;
-
-    .bg-letter {
-      right: 0;
-      text-align: right;
-    }
-  }
+  align-items: flex-start;
+  text-align: left;
 
   .bg-letter {
+    left: 0;
     position: absolute;
     top: -1rem;
     font-size: 8rem;
@@ -170,6 +166,24 @@ main {
     }
   }
 
+  // Alternating alignment only for single column
+  @media (max-width: 1023px) {
+    &:nth-child(even) {
+      align-items: flex-end;
+      text-align: right;
+
+      .bg-letter {
+        left: auto;
+        right: 0;
+        text-align: right;
+      }
+
+      ul {
+        align-items: flex-end;
+      }
+    }
+  }
+
   ul {
     list-style: none;
     margin: 0;
@@ -179,14 +193,7 @@ main {
     gap: 0.375rem;
     width: 100%;
     position: relative;
-
-    &.align-left {
-      align-items: flex-start;
-    }
-
-    &.align-right {
-      align-items: flex-end;
-    }
+    align-items: flex-start;
 
     li {
       color: $text-light;

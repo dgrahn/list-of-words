@@ -37,16 +37,15 @@ const IndexPage = ({ data }) => {
 
         <main>
           <div className="word-columns">
-            {alphabet.map((letter, index) => {
-              const isEven = index % 2 === 0;
+            {alphabet.map((letter) => {
               const words = wordsMap[letter];
               return (
                 <div
                   key={letter}
-                  className={`letter-block ${isEven ? 'align-left' : 'align-right'}`}
+                  className="letter-block"
                 >
                   <span className="bg-letter">{letter.toUpperCase()}</span>
-                  <ul className={isEven ? 'align-left' : 'align-right'}>
+                  <ul>
                     {words.map((word) => (
                       <li key={word}>
                         {word}
