@@ -3,7 +3,7 @@ export function categorizeWords(words) {
   if (!words) return wordsMap;
 
   words.forEach(word => {
-    const letter = word[0]
+    const letter = word[0].toUpperCase();
 
     if (wordsMap[letter]) {
       wordsMap[letter].push(word)
