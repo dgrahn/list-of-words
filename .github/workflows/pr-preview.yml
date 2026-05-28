@@ -12,7 +12,9 @@ concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,14 +23,26 @@ jobs:
         if: github.event.action != 'closed'
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
+
+      - name: Cache Gatsby
+        if: github.event.action != 'closed'
+        uses: actions/cache@v4
+        with:
+          path: |
+            .cache
+            public
+          key: ${{ runner.os }}-gatsby-cache-${{ github.head_ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-gatsby-cache-${{ github.head_ref }}-
+            ${{ runner.os }}-gatsby-cache-
 
       - name: Install and Build
         if: github.event.action != 'closed'
         run: |
-          npm install
-          PATH_PREFIX=/list-of-words/pr-preview/pr-${{ github.event.number }} npm run build -- --prefix-paths
+          npm ci
+          PATH_PREFIX=/pr-preview/pr-${{ github.event.number }} npm run build -- --prefix-paths
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
