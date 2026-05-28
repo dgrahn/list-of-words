@@ -43,7 +43,7 @@ jobs:
       - name: move files
         if: ${{ success() }}
         run: |
-          rsync -a --exclude 'pr-preview' ./main/public/* ./build
+          rsync -a --exclude 'pr-preview' ./main/public/ ./build
       
       - name: Commit updates
         if: ${{ success() }}
