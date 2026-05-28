@@ -1,13 +1,14 @@
 import * as React from "react"
 import { graphql } from 'gatsby'
-import { categorizeWords } from '../utils/wordUtils'
 import './index.scss'
 
 export const query = graphql`
   query Words {
-    allWordsYaml {
+    allWordDefinition {
       nodes {
         word
+        partOfSpeech
+        definition
       }
     }
     site {
@@ -17,54 +18,103 @@ export const query = graphql`
 `
 
 const IndexPage = ({ data }) => {
-  const wordsMap = React.useMemo(() => categorizeWords(data.allWordsYaml.nodes.map(n => n.word)), [data.allWordsYaml.nodes]);
-  const alphabet = Object.keys(wordsMap).sort();
+  const dictionaryContainerRef = React.useRef(null);
+
+  const wordsMap = React.useMemo(() => {
+    const map = {};
+    data.allWordDefinition.nodes.forEach(node => {
+      const firstLetter = node.word[0].toUpperCase();
+      if (!map[firstLetter]) {
+        map[firstLetter] = [];
+      }
+      map[firstLetter].push(node);
+    });
+    return Object.keys(map).sort().reduce((acc, key) => {
+      acc[key] = map[key];
+      return acc;
+    }, {});
+  }, [data.allWordDefinition.nodes]);
+
+  React.useEffect(() => {
+    const fadeElements = dictionaryContainerRef.current?.querySelectorAll('li, h2');
+    if (!fadeElements) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      fadeElements.forEach(el => el.style.opacity = '1');
+      return;
+    }
+
+    let ticking = false;
+
+    const updateOpacities = () => {
+      const center = window.innerHeight / 2;
+      fadeElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const elementCenter = rect.top + (rect.height / 2);
+        const distFromCenter = Math.abs(elementCenter - center);
+        el.style.opacity = Math.max(0.05, 1 - (distFromCenter / center));
+      });
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateOpacities();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    window.addEventListener('resize', updateOpacities);
+    updateOpacities();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', updateOpacities);
+    };
+  }, [wordsMap]);
 
   return (
-    <div className="app-wrapper">
-      <div className="content-container">
-        <header>
+    <>
+      <header>
+        <div className="header-content">
           <h1>
-            A List Of<br />
-            Extraordinary<br />
-            Words
+            <span className="title-small">A list of</span>
+            <span className="title-large">Extraordinary</span>
+            <span className="title-medium">Words</span>
           </h1>
-          <div className="byline">
-            BY DAN GRAHN<br />
-            & COMPANY
-          </div>
-        </header>
+          <p>By Dan Grahn &amp; Company</p>
+        </div>
+        <div className="scroll-arrow" aria-hidden="true"></div>
+      </header>
 
-        <main>
-          <div className="word-columns">
-            {alphabet.map((letter, index) => {
-              const isEven = index % 2 === 0;
-              const words = wordsMap[letter];
-              return (
-                <div
-                  key={letter}
-                  className={`letter-block ${isEven ? 'align-left' : 'align-right'}`}
-                >
-                  <span className="bg-letter">{letter.toUpperCase()}</span>
-                  <ul className={isEven ? 'align-left' : 'align-right'}>
-                    {words.map((word) => (
-                      <li key={word}>
-                        {word}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </main>
+      <main id="dictionary-container" ref={dictionaryContainerRef}>
+        {Object.entries(wordsMap).map(([letter, words]) => (
+          <section key={letter}>
+            <h2>{letter}</h2>
+            <ul>
+              {words.map(({ word, partOfSpeech, definition }) => (
+                <li key={word}>
+                  <div className="word-header">
+                    <span className="word-title">{word}</span>
+                    <span className="word-pos">{partOfSpeech}</span>
+                  </div>
+                  <div className="word-definition">{definition}</div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </main>
 
-        <footer>
-          <div>© DAN GRAHN</div>
-          <div>{data.site.buildTime}</div>
-        </footer>
-      </div>
-    </div>
+      <footer>
+        <p>&copy; Dan Grahn</p>
+        <time dateTime={data.site.buildTime}>{data.site.buildTime}</time>
+      </footer>
+    </>
   )
 }
 
@@ -72,7 +122,7 @@ export function Head() {
   return (
     <>
       <title>A List of Extraordinary Words</title>
-      <meta name="theme-color" content="#8B9E88" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
     </>
   )
 }
