@@ -1,0 +1,19 @@
+
+> a-list-of-extraordinary-words@1.0.0 serve
+> gatsby serve
+
+
+ ERROR  UNKNOWN
+
+(node:48147) [DEP0040] DeprecationWarning: The `punycode` module is deprecated.
+Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+
+[2K[1A[2K[G⠀
+
+[2K[1A[2K[GYou can now view a-list-of-extraordinary-words in the browser.
+
+[2K[1A[2K[G⠀
+
+[2K[1A[2K[G  http://localhost:9000/
