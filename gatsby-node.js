@@ -9,18 +9,23 @@ exports.onCreateNode = async ({ node, actions, createNodeId, createContentDigest
 
   if (node.internal.type === `WordsYaml`) {
     const word = node.word;
-    let retries = 3;
+    let retries = 5;
     while (retries > 0) {
       try {
-        const response = await fetch(`https://en.wiktionary.org/api/rest_v1/page/definition/${word}`);
+        const response = await fetch(`https://en.wiktionary.org/api/rest_v1/page/definition/${word}`, {
+          headers: {
+            'User-Agent': 'ExtraordinaryWordsBot/1.0 (https://words.grahn.us; action@github.com) GatsbyBuild/1.0'
+          }
+        });
         if (response.status === 429) {
-          console.warn(`Rate limited for ${word}, retrying...`);
-          await delay(2000);
+          const waitTime = (6 - retries) * 2000;
+          console.warn(`Rate limited for ${word}, retrying in ${waitTime}ms...`);
+          await delay(waitTime);
           retries--;
           continue;
         }
         if (!response.ok) {
-          console.error(`Failed to fetch definition for ${word}: ${response.statusText}`);
+          console.error(`Failed to fetch definition for ${word}: ${response.status} ${response.statusText}`);
           return;
         }
         const data = await response.json();
@@ -48,8 +53,9 @@ exports.onCreateNode = async ({ node, actions, createNodeId, createContentDigest
         }
         break; // Success or no data
       } catch (error) {
-        console.error(`Error fetching definition for ${word}:`, error);
-        await delay(1000);
+        const waitTime = (6 - retries) * 1000;
+        console.error(`Error fetching definition for ${word} (retries left: ${retries - 1}):`, error);
+        await delay(waitTime);
         retries--;
       }
     }

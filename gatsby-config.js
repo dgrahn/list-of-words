@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: "https://www.yourdomain.tld",
+    siteUrl: "https://words.grahn.us",
     title: "A List of Extraordinary Words",
   },
   plugins: [
@@ -22,5 +22,5 @@ module.exports = {
       }
     }
   ],
-  pathPrefix: process.env.PATH_PREFIX || '/list-of-words',
+  pathPrefix: process.env.PATH_PREFIX || '',
 };
