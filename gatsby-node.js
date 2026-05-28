@@ -12,7 +12,11 @@ exports.onCreateNode = async ({ node, actions, createNodeId, createContentDigest
     let retries = 5;
     while (retries > 0) {
       try {
-        const response = await fetch(`https://en.wiktionary.org/api/rest_v1/page/definition/${word}`);
+        const response = await fetch(`https://en.wiktionary.org/api/rest_v1/page/definition/${word}`, {
+          headers: {
+            'User-Agent': 'ExtraordinaryWordsBot/1.0 (https://words.grahn.us; action@github.com) GatsbyBuild/1.0'
+          }
+        });
         if (response.status === 429) {
           const waitTime = (6 - retries) * 2000;
           console.warn(`Rate limited for ${word}, retrying in ${waitTime}ms...`);
