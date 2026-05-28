@@ -28,7 +28,7 @@ jobs:
         if: github.event.action != 'closed'
         run: |
           npm install
-          PATH_PREFIX=/list-of-words/pr-preview/pr-${{ github.event.number }} npm run build -- --prefix-paths
+          PATH_PREFIX=/pr-preview/pr-${{ github.event.number }} npm run build -- --prefix-paths
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
