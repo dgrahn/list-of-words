@@ -6,15 +6,15 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
 
       - name: Setup Node
@@ -29,18 +29,31 @@ jobs:
       - name: Build Astro
         run: npm run build
 
+      - name: Add CNAME
+        run: cp CNAME dist/CNAME
+
+      - name: Sync main to build branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: build
+          clean: true
+          clean-exclude: pr-preview/
+
+      - name: Fetch all (previews + main) for deployment
+        run: |
+          # We want the artifact to contain the main site AND all existing previews.
+          # The 'build' branch now has the complete state.
+          git fetch origin build
+          # Use a temporary directory to avoid conflicts
+          mkdir -p deploy-dist
+          git --work-tree=deploy-dist checkout origin/build -- .
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./deploy-dist
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
