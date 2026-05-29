@@ -5,33 +5,26 @@
   "description": "A List of Extraordinary Words",
   "author": "Dan Grahn",
   "keywords": [
-    "gatsby"
+    "astro"
   ],
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "jest"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "vitest",
+    "check": "astro check"
   },
   "dependencies": {
-    "gatsby": "^5.10.0",
-    "gatsby-plugin-google-gtag": "^5.16.0",
-    "gatsby-plugin-sass": "^6.10.0",
-    "gatsby-source-filesystem": "^5.10.0",
-    "gatsby-transformer-yaml": "^5.10.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.0.0",
-    "sass": "^1.42.0"
+    "js-yaml": "^4.1.1",
+    "sass": "^1.100.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "babel-jest": "^30.4.1",
-    "babel-preset-gatsby": "^3.16.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^30.4.2",
-    "jest-environment-jsdom": "^30.4.1"
+    "@astrojs/check": "^0.9.9",
+    "astro": "^6.4.2",
+    "playwright": "^1.60.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.7"
   }
 }
