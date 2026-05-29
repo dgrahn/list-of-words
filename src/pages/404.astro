@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+const baseUrl = import.meta.env.BASE_URL;
+
+const pageStyles = {
+  padding: "96px 1.25rem",
+  textAlign: "center" as const,
+};
+const headingStyles = {
+  marginTop: "0px",
+  marginBottom: "64px",
+  maxWidth: "320px",
+  marginLeft: "auto",
+  marginRight: "auto",
+};
+---
+
+<Layout title="Page not found">
+  <main style={pageStyles}>
+    <h1 style={headingStyles}>Page not found</h1>
+    <p>
+      Sorry 😔, we couldn’t find what you were looking for.
+      <br />
+      <br />
+      <a href={baseUrl}>Go home</a>.
+    </p>
+  </main>
+</Layout>

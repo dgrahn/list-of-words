@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getEntry } from 'astro:content';
+import { fetchWordDefinition } from '../utils/fetchDefinitions';
+
+const wordsEntry = await getEntry('words', 'words');
+const wordsData = wordsEntry?.data || [];
+const wordsList = wordsData.map((item: { word: string }) => item.word);
+
+const definitions = [];
+for (const word of wordsList) {
+  const def = await fetchWordDefinition(word);
+  definitions.push(def);
+}
+
+const validDefinitions = definitions.filter((d): d is { word: string; partOfSpeech: string; definition: string } => d !== null);
+
+const wordsMap = validDefinitions.reduce((acc: Record<string, typeof validDefinitions>, node) => {
+  const firstLetter = node.word[0].toUpperCase();
+  if (!acc[firstLetter]) {
+    acc[firstLetter] = [];
+  }
+  acc[firstLetter].push(node);
+  return acc;
+}, {});
+
+const sortedLetters = Object.keys(wordsMap).sort();
+const buildTime = new Date().toISOString();
+---
+
+<Layout title="A List of Extraordinary Words">
+  <header>
+    <div class="header-content">
+      <h1>
+        <span class="title-small">A list of</span>
+        <span class="title-large">Extraordinary</span>
+        <span class="title-medium">Words</span>
+      </h1>
+      <p>By Dan Grahn & Company</p>
+    </div>
+    <div class="scroll-arrow" aria-hidden="true"></div>
+  </header>
+
+  <main id="dictionary-container">
+    {sortedLetters.map((letter) => (
+      <section>
+        <h2>{letter}</h2>
+        <ul>
+          {wordsMap[letter].map(({ word, partOfSpeech, definition }) => (
+            <li>
+              <div class="word-header">
+                <span class="word-title">{word}</span>
+                <span class="word-pos">{partOfSpeech}</span>
+              </div>
+              <div class="word-definition">{definition}</div>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </main>
+
+  <footer>
+    <p>&copy; Dan Grahn</p>
+    <time datetime={buildTime}>{buildTime}</time>
+  </footer>
+
+  <script>
+    const dictionaryContainer = document.getElementById('dictionary-container');
+    const fadeElements = dictionaryContainer?.querySelectorAll('li, h2');
+
+    if (fadeElements) {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        fadeElements.forEach(el => (el as HTMLElement).style.opacity = '1');
+      } else {
+        let ticking = false;
+
+        const updateOpacities = () => {
+          const center = window.innerHeight / 2;
+          fadeElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const elementCenter = rect.top + (rect.height / 2);
+            const distFromCenter = Math.abs(elementCenter - center);
+            (el as HTMLElement).style.opacity = Math.max(0.05, 1 - (distFromCenter / center)).toString();
+          });
+        };
+
+        const onScroll = () => {
+          if (!ticking) {
+            window.requestAnimationFrame(() => {
+              updateOpacities();
+              ticking = false;
+            });
+            ticking = true;
+          }
+        };
+
+        window.addEventListener('scroll', onScroll);
+        window.addEventListener('resize', updateOpacities);
+        updateOpacities();
+      }
+    }
+  </script>
+</Layout>
