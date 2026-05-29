@@ -7,11 +7,11 @@ const wordsEntry = await getEntry('words', 'words');
 const wordsData = wordsEntry?.data || [];
 const wordsList = wordsData.map((item: { word: string }) => item.word);
 
-const definitions = [];
-for (const word of wordsList) {
-  const def = await fetchWordDefinition(word);
-  definitions.push(def);
-}
+const definitions = await Promise.all(
+  wordsList.map(async (word: string) => {
+    return await fetchWordDefinition(word);
+  })
+);
 
 const validDefinitions = definitions.filter((d): d is { word: string; partOfSpeech: string; definition: string } => d !== null);
 
